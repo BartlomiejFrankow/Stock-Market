@@ -10,6 +10,9 @@ plugins {
 android {
     compileSdk 32
 
+    def Properties properties = new Properties()
+    properties.load(project.rootProject.file("local.properties").newDataInputStream())
+
     defaultConfig {
         applicationId "com.example.stockmarket"
         minSdk 24
@@ -21,6 +24,8 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+
+        resValue "string", "api_key", properties.getProperty("API_KEY", "")
     }
 
     buildTypes {
