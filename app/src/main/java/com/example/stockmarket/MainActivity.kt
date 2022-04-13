@@ -19,8 +19,6 @@ class MainActivity : ComponentActivity() {
             StockMarketTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-                    resources.getString(R.string.api_key)
-                    // TODO video paused at 15:23 https://www.youtube.com/watch?v=uLs2FxFSWU4
                 }
             }
         }

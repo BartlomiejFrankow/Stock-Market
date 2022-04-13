@@ -10,9 +10,6 @@ plugins {
 android {
     compileSdk 32
 
-    def Properties properties = new Properties()
-    properties.load(project.rootProject.file("local.properties").newDataInputStream())
-
     defaultConfig {
         applicationId "com.example.stockmarket"
         minSdk 24
@@ -24,8 +21,6 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
-
-        resValue "string", "api_key", properties.getProperty("API_KEY", "")
     }
 
     buildTypes {
@@ -64,9 +59,6 @@ dependencies {
 
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
-
-    // OpenCSV
-    implementation 'com.opencsv:opencsv:5.5.2'
 
     //Dagger - Hilt
     implementation "com.google.dagger:hilt-android:2.40.5"
