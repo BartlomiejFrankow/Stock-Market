@@ -5,6 +5,5 @@ import com.example.domain.model.CompanyListing
 import kotlinx.coroutines.flow.Flow
 
 interface StockRepository {
-
     suspend fun getCompanyListings(fetchFromRemote: Boolean, query: String): Flow<RequestResult<List<CompanyListing>>>
 }
