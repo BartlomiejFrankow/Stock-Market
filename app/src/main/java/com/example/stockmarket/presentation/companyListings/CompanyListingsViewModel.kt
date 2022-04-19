@@ -49,6 +49,8 @@ class CompanyListingsViewModel @Inject constructor(
         fetchFromRemote: Boolean = false
     ) {
         viewModelScope.launch {
+            state = state.copy(isLoading = true)
+
             repository
                 .getCompanyListings(fetchFromRemote, query)
                 .onEach { result ->
