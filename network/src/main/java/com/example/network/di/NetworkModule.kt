@@ -4,8 +4,10 @@ import android.app.Application
 import androidx.room.Room
 import com.example.domain.common.Constants
 import com.example.domain.model.CompanyListing
+import com.example.domain.model.IntraDayInfo
 import com.example.network.csv.CSVParser
 import com.example.network.csv.CompanyListingParser
+import com.example.network.csv.IntraDayInfoParser
 import com.example.network.local.StockDatabase
 import com.example.network.remote.StockApi
 import dagger.Module
@@ -37,5 +39,9 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideCompanyListingParser(): CSVParser<CompanyListing> = CompanyListingParser()
+
+    @Provides
+    @Singleton
+    fun provideIntraDayInfoParser(): CSVParser<IntraDayInfo> = IntraDayInfoParser()
 
 }
