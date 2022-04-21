@@ -18,7 +18,7 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class StockRepositoryImpl @Inject constructor(
+internal class StockRepositoryImpl @Inject constructor(
     private val api: StockApi,
     private val db: StockDatabase,
     private val companyListingParser: CSVParser<CompanyListing>,
