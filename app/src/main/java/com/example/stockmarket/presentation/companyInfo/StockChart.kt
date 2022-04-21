@@ -52,7 +52,7 @@ fun StockChart(
         drawValues(upperValue, lowerValue, textPaint)
 
         var lastX = 0f
-        val strokePath = drawMainPath(size.height, infoList, lowerValue, upperValue, spacePerHour) { lastX = it }
+        val strokePath = drawMainPath(infoList, lowerValue, upperValue, spacePerHour) { lastX = it }
         val fillPath = android.graphics.Path(strokePath.asAndroidPath()).asComposePath().apply {
             lineTo(lastX, size.height - SPACING)
             lineTo(SPACING, size.height - SPACING)
@@ -79,14 +79,7 @@ fun StockChart(
 
 }
 
-private fun drawMainPath(
-    drawScopeHeight: Float,
-    infoList: List<IntraDayInfo>,
-    lowerValue: Int,
-    upperValue: Int,
-    spacePerHour: Float,
-    lastX: (Float) -> Unit
-): Path {
+private fun DrawScope.drawMainPath(infoList: List<IntraDayInfo>, lowerValue: Int, upperValue: Int, spacePerHour: Float, lastX: (Float) -> Unit): Path {
     return Path().apply {
         for (index in infoList.indices) {
             val info = infoList[index]
@@ -95,9 +88,9 @@ private fun drawMainPath(
             val rightRatio = (nextInfo.close - lowerValue) / (upperValue - lowerValue)
 
             val x1 = SPACING + index * spacePerHour
-            val y1 = drawScopeHeight - SPACING - (leftRatio * drawScopeHeight).toFloat()
+            val y1 = size.height - SPACING - (leftRatio * size.height).toFloat()
             val x2 = SPACING + (index + 1) * spacePerHour
-            val y2 = drawScopeHeight - SPACING - (rightRatio * drawScopeHeight).toFloat()
+            val y2 = size.height - SPACING - (rightRatio * size.height).toFloat()
 
             if (index == 0) moveTo(x1, y1)
 

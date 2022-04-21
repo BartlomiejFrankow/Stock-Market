@@ -12,6 +12,7 @@ import com.example.domain.useCase.companyInfo.GetCompanyInfoUseCase
 import com.example.domain.useCase.companyInfo.GetIntraDayInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,20 +29,37 @@ class CompanyInfoViewModel @Inject constructor(
         viewModelScope.launch {
             val symbol = savedStateHandle.get<String>(ARG_SYMBOL) ?: return@launch
 
-            val companyInfoResult = async { getCompanyInfoUseCase(symbol) }
-            val intraDayResult = async { getIntraDayInfoUseCase(symbol) }
+            val companyInfoResult = async { getCompanyInfo(symbol) }
+            val intraDayResult = async { getIntraDayInfo(symbol) }
 
-            state = when (val result = companyInfoResult.await()) {
+            listOf(companyInfoResult, intraDayResult).awaitAll()
+        }
+    }
+
+    private fun getCompanyInfo(symbol: String) {
+        viewModelScope.launch {
+            state = when (val result = getCompanyInfoUseCase(symbol)) {
                 RequestResult.HttpException -> state.copy(error = "HTTP exception error", isLoading = false)
                 RequestResult.IOException -> state.copy(error = "IO exception error", isLoading = false)
-                is RequestResult.Success -> state.copy(company = result.body, isLoading = false)
+                is RequestResult.Success -> {
+                    println("STOCK_GET_COMPANY_INFO_SUCCESS_RESULT: ${result.body}")
+                    state.copy(company = result.body, isLoading = false)
+                }
                 is RequestResult.Loading -> state.copy(isLoading = result.isLoading)
             }
+        }
+    }
 
-            state = when (val result = intraDayResult.await()) {
+    private fun getIntraDayInfo(symbol: String) {
+        viewModelScope.launch {
+            getIntraDayInfoUseCase(symbol)
+            state = when (val result = getIntraDayInfoUseCase(symbol)) {
                 RequestResult.HttpException -> state.copy(error = "HTTP exception error", isLoading = false)
                 RequestResult.IOException -> state.copy(error = "IO exception error", isLoading = false)
-                is RequestResult.Success -> state.copy(stockInfoList = result.body, isLoading = false)
+                is RequestResult.Success -> {
+                    println("STOCK_GET_INTRA_DAY_INFO_SUCCESS_RESULT: ${result.body}")
+                    state.copy(stockInfoList = result.body, isLoading = false)
+                }
                 is RequestResult.Loading -> state.copy(isLoading = result.isLoading)
             }
         }
