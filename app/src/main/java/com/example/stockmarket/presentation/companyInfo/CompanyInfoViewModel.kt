@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.common.Constants.ARG_SYMBOL
 import com.example.domain.common.RequestResult
 import com.example.domain.useCase.companyInfo.GetCompanyInfoUseCase
 import com.example.domain.useCase.companyInfo.GetIntraDayInfoUseCase
@@ -25,7 +26,7 @@ class CompanyInfoViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val symbol = savedStateHandle.get<String>("symbol") ?: return@launch
+            val symbol = savedStateHandle.get<String>(ARG_SYMBOL) ?: return@launch
 
             val companyInfoResult = async { getCompanyInfoUseCase(symbol) }
             val intraDayResult = async { getIntraDayInfoUseCase(symbol) }

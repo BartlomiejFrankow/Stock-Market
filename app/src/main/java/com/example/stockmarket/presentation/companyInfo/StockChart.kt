@@ -110,7 +110,7 @@ private fun drawMainPath(
 
 private fun DrawScope.drawValues(upperValue: Int, lowerValue: Int, textPaint: Paint) {
     val priceStep = (upperValue - lowerValue) / Y_AXIS_VALUES_COUNTER
-    (0..5).forEach { index ->
+    (0..4).forEach { index ->
         drawContext.canvas.nativeCanvas.apply {
             drawText(
                 round(lowerValue + priceStep * index).toString(),
