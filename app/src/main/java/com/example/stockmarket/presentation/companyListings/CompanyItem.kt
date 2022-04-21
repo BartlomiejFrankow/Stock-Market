@@ -42,12 +42,14 @@ fun CompanyItem(
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
                     text = company.exchange,
-                    fontWeight = FontWeight.Light
+                    fontWeight = FontWeight.Light,
+                    color = MaterialTheme.colors.secondary,
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = "(${company.symbol})",
-                    fontStyle = FontStyle.Italic
+                    fontStyle = FontStyle.Italic,
+                    color = MaterialTheme.colors.secondary,
                 )
             }
         }
