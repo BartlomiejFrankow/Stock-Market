@@ -117,7 +117,7 @@ fun CompanyInfoScreen(
             CircularProgressIndicator()
         } else if (state.error != null) {
             Text(
-                text = state.error,
+                text = state.error.asString(),
                 color = MaterialTheme.colors.error
             )
         }
