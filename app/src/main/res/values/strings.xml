@@ -5,4 +5,6 @@
     <string name="country">Country: %1$s</string>
     <string name="market_summary">Market Summary</string>
     <string name="description">Description: %1$s</string>
+    <string name="error_http">HTTP exception error</string>
+    <string name="error_io">IO exception error</string>
 </resources>
