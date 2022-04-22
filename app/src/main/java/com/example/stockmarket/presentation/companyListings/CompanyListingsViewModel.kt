@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.common.RequestResult
-import com.example.domain.repository.StockRepository
+import com.example.domain.useCase.companyListings.GetCompanyListingsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CompanyListingsViewModel @Inject constructor(
-    private val repository: StockRepository
+    private val getCompanyListingsUseCase: GetCompanyListingsUseCase
 ) : ViewModel() {
 
     var state by mutableStateOf(CompanyListingsState())
@@ -50,13 +50,11 @@ class CompanyListingsViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             state = state.copy(isLoading = true)
-
-            repository
-                .getCompanyListings(fetchFromRemote, query)
+            getCompanyListingsUseCase(query, fetchFromRemote)
                 .onEach { result ->
                     when (result) {
-                        RequestResult.HttpException -> state = state.copy(error = "HTTP exception error")
-                        RequestResult.IOException -> state = state.copy(error = "IO exception error")
+                        RequestResult.HttpException -> state = state.copy(error = "HTTP exception error", isLoading = false)
+                        RequestResult.IOException -> state = state.copy(error = "IO exception error", isLoading = false)
                         is RequestResult.Loading -> state = state.copy(isLoading = result.isLoading)
                         is RequestResult.Success -> result.body.let { listings -> state = state.copy(companies = listings) }
                     }

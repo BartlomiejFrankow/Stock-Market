@@ -7,5 +7,5 @@ data class CompanyListingsState(
     val isLoading: Boolean = true,
     val isRefreshing: Boolean = false,
     val searchQuery: String = "",
-    val error: String = ""
+    val error: String? = null
 )

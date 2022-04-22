@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Stock Market</string>
     <string name="search">Search…</string>
+    <string name="industry">Industry: %1$s</string>
+    <string name="country">Country: %1$s</string>
+    <string name="market_summary">Market Summary</string>
+    <string name="description">Description: %1$s</string>
 </resources>

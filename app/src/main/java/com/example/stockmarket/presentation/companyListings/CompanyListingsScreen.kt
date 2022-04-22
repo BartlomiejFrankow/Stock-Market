@@ -15,6 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.stockmarket.R
 import com.example.stockmarket.presentation.companyListings.CompanyListingsEvent.OnSearchQueryChange
 import com.example.stockmarket.presentation.companyListings.CompanyListingsEvent.Refresh
+import com.example.stockmarket.presentation.destinations.CompanyInfoScreenDestination
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.ramcosta.composedestinations.annotation.Destination
@@ -62,7 +63,7 @@ fun CompanyListingsScreen(
                     CompanyItem(
                         company = state.companies[index],
                         modifier = Modifier.clickable {
-                            // TODO navigate to details screen
+                            navigator.navigate(CompanyInfoScreenDestination(state.companies[index].symbol))
                         }
                     )
                     if (index < state.companies.size) Divider(modifier = Modifier.padding(horizontal = 16.dp))
